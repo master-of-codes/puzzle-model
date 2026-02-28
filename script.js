@@ -8,12 +8,24 @@ const STORAGE_KEY = 'puzzle_db';
 // Updated Regex to allow kenrich@gmail.com and standard gmail
 const GMAIL_REGEX = /^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$/;
 
+// Puzzle piece images (used for the jigsaw puzzle)
 const ASSETS = [
     'assets/images/stage_1.png',
     'assets/images/stage_2.png',
     'assets/images/stage_3.png',
     'assets/images/stage_4.png',
     'assets/images/stage_5.png'
+];
+
+// Background images for each stage - EDIT THIS ARRAY TO CHANGE BACKGROUNDS
+// You can use different images, different paths, or even the same as ASSETS
+const BACKGROUND_IMAGES = [
+    'assets/images/stage_5.png',
+    'assets/images/stage_1.png',
+    'assets/images/stage_2.png',
+    'assets/images/stage_3.png',
+    'assets/images/stage_4.png'
+    
 ];
 
 const CONFIG = {
@@ -287,14 +299,14 @@ const UI = {
         this.screens.login.classList.remove('hidden');
         this.screens.start.classList.add('hidden');
         this.screens.game.classList.add('hidden');
-        document.body.style.backgroundImage = `url('assets/images/stage_1.png')`;
+        document.body.style.backgroundImage = `url('${BACKGROUND_IMAGES[0]}')`;
     },
     
     showStartModal() {
         this.screens.login.classList.add('hidden');
         this.screens.game.classList.add('hidden');
         this.screens.start.classList.remove('hidden');
-        document.body.style.backgroundImage = `url('assets/images/stage_1.png')`;
+        document.body.style.backgroundImage = `url('${BACKGROUND_IMAGES[0]}')`;
     },
     
     startGame(user) {
@@ -474,8 +486,12 @@ const Game = {
         const assetIndex = (level - 1) % ASSETS.length;
         const assetUrl = ASSETS[assetIndex];
         
-        // Update Body Background
-        document.body.style.backgroundImage = `url('${assetUrl}')`;
+        // Update Body Background using BACKGROUND_IMAGES array
+        const bgIndex = (level - 1) % BACKGROUND_IMAGES.length;
+        const bgUrl = BACKGROUND_IMAGES[bgIndex];
+        document.body.style.backgroundImage = `url('${bgUrl}')`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backdropFilter = 'blur(5px)'; // Subtle blur for background
         
         this.img = new Image();
         this.img.src = assetUrl;
